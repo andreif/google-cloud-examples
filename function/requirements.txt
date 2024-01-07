@@ -1,0 +1,1 @@
+# needed by gcloud cli to be able to deploy python function :(
