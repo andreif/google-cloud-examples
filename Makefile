@@ -31,5 +31,8 @@ config-list:
 gcloud:
 	@echo ${GCLOUD}
 
-project-number:
-	@${GCLOUD} projects describe $(shell make -s project) --format='value(projectNumber)'
+gcloud-exec:
+	@echo ${GCLOUD_EXEC}
+
+project-number:  check-vars
+	@${GCLOUD} projects describe ${PROJECT} --format='value(projectNumber)'
