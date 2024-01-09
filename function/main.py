@@ -1,24 +1,29 @@
 import json
 import os
 
+from google.cloud.sql.connector import Connector, IPTypes
+
 
 def dump(x):
     print(json.dumps(x, default=repr))
 
 
 def handler(request, **kwargs):
-    import psycopg2
-    conn = psycopg2.connect(
-        host=os.environ['DB_IP'].strip(),
-        user='postgres',
+    conn = Connector().connect(
+        os.environ['DB_CONNECTION'],
+        "pg8000",
+        user=os.environ['DB_USER'],
         password=os.environ['DB_PASSWORD'].strip(),
-        dbname='postgres'
+        db=os.environ['DB_DATABASE'],
+        ip_type=IPTypes.PUBLIC,
     )
-    with conn.cursor() as cur:
-        cur.execute('SELECT * FROM your_table')
-        rows = cur.fetchall()
+    cur = conn.cursor()
+    cur.execute('SELECT tablename FROM pg_catalog.pg_tables')
+    rows = cur.fetchall()
+    cur.close()
     conn.close()
 
     dump(rows)
     dump(request.__dict__)
+    dump(kwargs)
     return "Hello World!"

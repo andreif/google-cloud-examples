@@ -15,7 +15,7 @@ remove-existing-container:
 	@docker rm -f ${GCLOUD_CONTAINER} 2>/dev/null || true
 
 config-set:  check-vars
-	${GCLOUD} config set core/project ${PROJECT}
+	${GCLOUD} config set core/project     ${PROJECT}
 	${GCLOUD} config set functions/region ${REGION}
 	@echo
 	make config-list

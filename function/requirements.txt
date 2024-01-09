@@ -1,2 +1,3 @@
-# needed by gcloud cli to be able to deploy python function :(
-psycopg2
+# not locking versions for now:
+cloud-sql-python-connector
+pg8000
